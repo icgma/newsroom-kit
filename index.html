@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark light" />
 <title>新闻人工具箱 — icgma</title>
-<meta name="description" content="一个新闻人接触 AI、学习编程过程中做的小工具集：编解码、简繁转换、稿件统计。全部本地运行。" />
+<meta name="description" content="一个新闻人接触 AI、学习编程过程中做的小工具集。可按类别、场景自由组合。全部本地运行，稿件不上传。" />
 <link rel="stylesheet" href="hub.css" />
 </head>
 <body>
@@ -14,8 +14,12 @@
     <div class="brand">
       <span class="dot" aria-hidden="true"></span>
       <span class="wordmark">newsroom-kit</span>
+      <span class="tag">新闻人工具箱</span>
     </div>
     <div class="topbar-right">
+      <a class="ghlink" href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener" title="源码">
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-1-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.8 3.8-3.6 4 .3.3.5.8.5 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 0Z"/></svg>
+      </a>
       <button class="theme-toggle" id="themeToggle" title="切换主题">
         <svg class="ico-moon" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
         <svg class="ico-sun" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
@@ -30,115 +34,43 @@
       <h1>新闻人工具箱</h1>
       <p class="lede">
         我是一名新闻从业者，正在学习编程、试着用 AI 把日常工作里那些重复的小麻烦，
-        做成能用的小工具。这里收录的每一个，都解决一个我自己遇到过的具体问题，
-        并且全部在你自己的浏览器里运行——稿件不离开设备。
+        做成能用的小工具。每个工具都是独立的网站，可以单独用、单独收藏；
+        在这里按类别或按工作场景组合起来。全部在你的浏览器里运行——稿件不离开设备。
       </p>
-      <div class="hero-tags">
-        <span>纯前端</span><span>本地运行</span><span>开源</span><span>GitHub Pages 托管</span>
-      </div>
     </div>
   </main>
 
-  <section class="tools">
-    <h2 class="section-title">工具</h2>
-    <div class="grid">
-
-      <a class="tool" href="https://icgma.github.io/codec/">
-        <div class="tool-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4Zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4Z"/></svg>
-        </div>
-        <div class="tool-body">
-          <h3>编解码 codec</h3>
-          <p>Base64 / URL / Hex / HTML 实体 / Unicode 转义，SHA 哈希，JWT 解析。粘贴即转，双向可逆。</p>
-          <div class="tool-meta">
-            <span class="chip">编解码</span><span class="chip">哈希</span><span class="chip">解析</span>
-          </div>
-        </div>
-        <span class="tool-go" aria-hidden="true">→</span>
-      </a>
-
-      <a class="tool" href="https://icgma.github.io/s2t/">
-        <div class="tool-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.9 3a10 10 0 0 0-9 14.5L3 21l3.5-.9A10 10 0 1 0 12.9 3Zm-2 12.5-2.2-2.2-1.4 1.4 3.6 3.6 6-6-1.4-1.4-4.6 4.6Z"/></svg>
-        </div>
-        <div class="tool-body">
-          <h3>简繁转换 s2t</h3>
-          <p>简体、繁体（台湾 / 香港）互转，区分字形与用词差异，标出每一处改动，支持直角引号。</p>
-          <div class="tool-meta">
-            <span class="chip">简繁</span><span class="chip">用词</span><span class="chip">OpenCC</span>
-          </div>
-        </div>
-        <span class="tool-go" aria-hidden="true">→</span>
-      </a>
-
-      <a class="tool" href="https://icgma.github.io/textstats/">
-        <div class="tool-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h16v3H4V4Zm0 6h10v3H4v-3Zm0 6h16v3H4v-3Z"/></svg>
-        </div>
-        <div class="tool-body">
-          <h3>稿件体检 textstats</h3>
-          <p>统计汉字、段落、阅读与播报时长，标出长句和重复用词，帮稿件在念出来之前先过关。</p>
-          <div class="tool-meta">
-            <span class="chip">字数</span><span class="chip">时长</span><span class="chip">可读性</span>
-          </div>
-        </div>
-        <span class="tool-go" aria-hidden="true">→</span>
-      </a>
-
+  <div class="controls">
+    <div class="search-wrap">
+      <svg class="search-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.7 10.3a5.5 5.5 0 1 0-1.4 1.4l3.3 3.3 1.4-1.4-3.3-3.3ZM7 10.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
+      <input type="search" id="search" placeholder="搜索工具、功能或关键词…（按 / 聚焦）" aria-label="搜索工具" autocomplete="off" />
+      <button class="search-clear" id="searchClear" title="清空搜索" aria-label="清空搜索" hidden>
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M9.4 8l3.3-3.3-1.4-1.4L8 6.6 4.7 3.3 3.3 4.7 6.6 8l-3.3 3.3 1.4 1.4L8 9.4l3.3 3.3 1.4-1.4L9.4 8Z"/></svg>
+      </button>
     </div>
-  </section>
-
-  <section class="about">
-    <h2 class="section-title">关于这个项目</h2>
-    <div class="about-grid">
-      <div class="about-card">
-        <h3>为什么做</h3>
-        <p>新闻工作里有大量格式转换、字数核对、简繁校对这类琐事。与其每次都搜在线工具、把稿件贴到陌生网站，不如自己写几个放心的本地小工具。</p>
-      </div>
-      <div class="about-card">
-        <h3>技术取舍</h3>
-        <p>每个工具都是单个 HTML + CSS + JS，零依赖（简繁字典 OpenCC 例外，但本地加载）。没有后端、没有追踪、没有构建步骤，push 即部署。</p>
-      </div>
-      <div class="about-card">
-        <h3>隐私承诺</h3>
-        <p>所有处理都在浏览器里完成。稿件、密文、待转文本一律不上传。打开开发者工具的网络面板，你看不到任何内容外发。</p>
-      </div>
+    <div class="segmented" id="viewToggle" role="group" aria-label="浏览方式">
+      <button class="seg active" data-view="scenario">按场景</button>
+      <button class="seg" data-view="category">按类别</button>
+      <button class="seg" data-view="all">全部</button>
     </div>
-  </section>
+  </div>
+
+  <div id="content" class="content"></div>
 
   <footer class="footer">
     <div class="footer-meta">
       <span>Built with <strong>GLM-5.2</strong></span>
-      <span class="sep">·</span>
-      <span>作者 <span class="footer-author">icgma</span></span>
+      <span class="sep desktop-only">·</span>
+      <span class="desktop-only">作者 <span class="footer-author">icgma</span></span>
       <span class="sep">·</span>
       <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
     </div>
     <div class="footer-meta">
-      <span>一个新闻人学编程的练习场</span>
+      <span id="count" class="desktop-only"></span>
     </div>
   </footer>
 </div>
-
-<script>
-(() => {
-  const root = document.documentElement;
-  const label = document.getElementById("themeLabel");
-  const KEY = "toolkit-theme";
-  function applyTheme(theme) {
-    if (theme === "auto") root.removeAttribute("data-theme");
-    else root.setAttribute("data-theme", theme);
-    const isLight = theme === "light" || (theme === "auto" && matchMedia("(prefers-color-scheme: light)").matches);
-    label.textContent = isLight ? "深色" : "浅色";
-  }
-  document.getElementById("themeToggle").addEventListener("click", () => {
-    const cur = localStorage.getItem(KEY) || "auto";
-    const next = cur === "auto" ? "light" : cur === "light" ? "dark" : "auto";
-    localStorage.setItem(KEY, next);
-    applyTheme(next);
-  });
-  applyTheme(localStorage.getItem(KEY) || "auto");
-})();
-</script>
+<script src="registry.js"></script>
+<script src="hub.js"></script>
 </body>
 </html>
