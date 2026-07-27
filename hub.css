@@ -129,11 +129,6 @@ body {
 /* Hero */
 .hero { padding: 56px 24px 32px; }
 .hero-inner { max-width: 720px; margin: 0 auto; text-align: center; }
-.kicker {
-  margin: 0 0 12px;
-  font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase;
-  color: var(--accent); font-weight: 600;
-}
 .hero h1 {
   margin: 0 0 14px;
   font-size: 34px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.2;
