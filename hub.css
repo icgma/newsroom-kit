@@ -494,7 +494,7 @@ kbd {
 .main { max-width: 1060px; padding-bottom: 40px; }
 
 /* ── 首屏 ─────────────────────────────────────────────────── */
-.hero { text-align: center; padding: 44px 16px 30px; }
+.hero { text-align: center; padding: 58px 16px 32px; }
 .eyebrow { margin: 0 0 10px; }
 .hero-title {
   margin: 0 0 12px;
