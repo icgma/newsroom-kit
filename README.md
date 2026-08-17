@@ -52,6 +52,41 @@ python -m http.server 8000   # 打开 http://localhost:8000
 推送到 `main`，`.github/workflows/deploy.yml` 自动把整个仓库发布到
 <https://icgma.github.io/newsroom-kit/>（工具在各自子路径下）。
 
+## 中国访问优化
+
+github.io 在大陆访问不稳定，本仓库已做的与可选的进一步措施：
+
+**已完成（仓库内置）**
+
+- **零第三方 CDN 依赖**：jStat、pdf.js 全部本地化到各工具 `lib/` 并锁版本——
+  这本身就是最重要的「CDN 优化」，不受 jsdelivr/unpkg 在大陆间歇失效影响
+- **scipdf 懒加载**：pdf.js（约 1.3MB）只在用户真正拖入 PDF 时才加载，首屏与普通访问零负担
+- **脚本全部 `defer`**：HTML 解析不被阻塞
+- **无 webfont**：系统字体栈，中英文字体零下载
+- **单页自包含**：每页 HTML+CSS+JS 合计 < 60KB（不含工具库），弱网可开
+
+**可选的进一步措施（需要你自己的资源）**
+
+| 方案 | 效果 | 门槛 |
+|------|------|------|
+| 自定义域名 + 国内 CDN（阿里云/腾讯云 EdgeOne）回源 github.io | 大陆访问快且稳 | 需备案域名 |
+| Cloudflare Pages 镜像（Actions 里加一个 deploy 步骤） | 免备案，速度一般但可用性更好 | 需 CF 账号 |
+| 多入口公告：在 README/课程主页同时给出镜像地址 | 用户可自行选择 | 无 |
+
+如需启用镜像部署，可在 Secrets 里配置对应平台的 Token 后仿照
+`deploy.yml` 增加一个 job，产物直接上传即可（仓库是纯静态目录）。
+
+## SEO
+
+- 每页独立 `title` / `description` / `keywords`（中文搜索词优先）
+- `canonical` + [sitemap.xml](sitemap.xml) + [robots.txt](robots.txt) + 自定义 [404](404.html)
+- Open Graph / Twitter Card：分享到微信、微博、X 有品牌卡片（印章设计，`assets/og-*.png`）
+- JSON-LD 结构化数据：hub 为 `WebSite`，工具为 `WebApplication`
+- 卡片重生成：`python -m http.server` 后用浏览器截图 `tools/og-card.html?seal=p&title=…`
+
+注意：百度对 github.io 收录有限；如需大陆搜索引擎收录，建议配合上述自定义域名方案，
+并在百度站长平台提交验证。
+
 ## 关于
 
 作者 [icgma](https://github.com/icgma)。工具随遇到的实际问题慢慢增加，规划见 [ROADMAP.md](ROADMAP.md)。

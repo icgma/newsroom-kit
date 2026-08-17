@@ -146,6 +146,24 @@ initTheme();
   }
 
   // ── PDF 处理 ─────────────────────────────────────────────
+  // ── pdf.js 懒加载（首屏省 1.3MB：拖入文件时才加载）────────
+  let pdfjsReady = null;
+  function loadPdfJs() {
+    if (pdfjsReady) return pdfjsReady;
+    pdfjsReady = new Promise((resolve, reject) => {
+      if (typeof pdfjsLib !== "undefined") { resolve(pdfjsLib); return; }
+      const s = document.createElement("script");
+      s.src = "lib/pdf.min.js";
+      s.onload = () => resolve(window.pdfjsLib);
+      s.onerror = () => {
+        pdfjsReady = null;
+        reject(new Error("PDF 解析库（lib/pdf.min.js）加载失败，请检查网络后重试。"));
+      };
+      document.head.appendChild(s);
+    });
+    return pdfjsReady;
+  }
+
   async function processPDF(file) {
     if (!file) return;
     if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
@@ -157,14 +175,15 @@ initTheme();
     els.results.hidden = true;
     els.progress.hidden = false;
     els.progressFill.style.width = "8%";
-    els.progressText.textContent = "正在读取 PDF…";
-    setStatus("busy", "正在读取 PDF…", file.name);
+    els.progressText.textContent = "正在加载解析库…";
+    setStatus("busy", "正在加载解析库…", file.name);
 
     try {
-      if (typeof pdfjsLib === "undefined") {
-        throw new Error("PDF 解析库未能加载（lib/pdf.min.js）。请刷新页面重试。");
-      }
+      const pdfjsLib = await loadPdfJs();
       pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
+
+      els.progressFill.style.width = "20%";
+      els.progressText.textContent = "正在读取 PDF…";
 
       const arrayBuffer = await file.arrayBuffer();
       els.progressFill.style.width = "20%";
