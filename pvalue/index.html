@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pvalue — p 值与效应量</title>
+<meta name="description" content="输入 t / F / χ² / r 统计量，即时得到 p 值、效应量与 95% 置信区间；或反推所需样本量。纯浏览器计算，数据不上传。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23fdf9f0' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="brand">
+      <a class="back-link" href="../index.html" title="返回工具箱">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M10.5 2 5 8l5.5 6 1.4-1.4L7.8 8l4.1-4.6Z"/></svg>
+        工具箱
+      </a>
+      <span class="seal" aria-hidden="true">p</span>
+      <span class="wordmark">pvalue</span>
+      <span class="tag">p 值与效应量</span>
+    </div>
+    <div class="topbar-right">
+      <span class="chip" title="所有计算在本机浏览器完成">
+        <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 1 2 4v4c0 3.6 2.6 6.8 6 7.8 3.4-1 6-4.2 6-7.8V4L8 1Zm0 2.2L13 5.4v2.6c0 2.8-2 5.3-5 6.2-3-.9-5-3.4-5-6.2V5.4L8 3.2Z"/></svg>
+        <span class="chip-label">数据不上传</span>
+      </span>
+      <button class="theme-toggle" id="themeToggle" type="button" title="切换主题">
+        <svg class="ico-auto" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm0 1.6A5.4 5.4 0 0 0 8 13.4V2.6Z" opacity=".9"/><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm1.2 1.63a5.4 5.4 0 0 1 0 10.74V2.63Z" opacity=".45"/></svg>
+        <svg class="ico-sun" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
+        <svg class="ico-moon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
+        <span id="themeLabel">自动</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main" id="mainUI">
+
+    <div class="intro">
+      <p class="eyebrow">计量核查 · 审稿与写作</p>
+      <h1 class="page-title">p 值与效应量换算</h1>
+      <p class="page-desc">输入论文里的检验统计量，即刻得到 <span class="st">p</span> 值、效应量与置信区间，按 APA 格式报告；也可以反推「要检出这个效应，需要多少样本」。全部计算在本机完成。</p>
+    </div>
+
+    <div class="mode-row">
+      <div class="segmented" id="modeSwitch" role="group" aria-label="计算模式">
+        <button class="seg active" data-act="mode-pvalue" type="button">算 p 值</button>
+        <button class="seg" data-act="mode-power" type="button">算样本量</button>
+      </div>
+    </div>
+
+    <!-- ── 模式一：算 p 值 ─────────────────────────────────── -->
+    <section id="panelPvalue" aria-label="p 值计算">
+      <nav class="tabs" id="testTabs" role="tablist" aria-label="检验类型">
+        <button class="tab active" data-act="test-t" role="tab" aria-selected="true" type="button"><span class="st">t</span> 检验</button>
+        <button class="tab" data-act="test-F" role="tab" aria-selected="false" type="button"><span class="st-up">F</span> 检验</button>
+        <button class="tab" data-act="test-chi2" role="tab" aria-selected="false" type="button"><span class="st-up">χ²</span> 检验</button>
+        <button class="tab" data-act="test-r" role="tab" aria-selected="false" type="button"><span class="st">r</span> 相关</button>
+      </nav>
+
+      <div class="panel panel-pad">
+        <div class="field-grid" id="inputFields"></div>
+      </div>
+
+      <div class="output" id="outputPvalue" hidden>
+        <div class="statline">
+          <span class="statline-main num" id="resultStatline"></span>
+          <span class="stars" id="resultStars" aria-hidden="true"></span>
+        </div>
+        <div class="result-grid" id="resultGrid"></div>
+        <div class="copyline" id="reportLine">
+          <div class="copyline-text" id="reportText"></div>
+          <button class="copy-btn" data-act="copy-report" type="button">复制</button>
+        </div>
+        <p class="footnote" id="resultFootnote"></p>
+      </div>
+    </section>
+
+    <!-- ── 模式二：算样本量 ────────────────────────────────── -->
+    <section id="panelPower" hidden aria-label="功效分析">
+      <nav class="tabs" id="powerTabs" role="tablist" aria-label="检验类型">
+        <button class="tab active" data-act="power-t" role="tab" aria-selected="true" type="button"><span class="st">t</span>（<span class="st">d</span>）</button>
+        <button class="tab" data-act="power-F" role="tab" aria-selected="false" type="button"><span class="st-up">F</span>（<span class="st">f</span>）</button>
+        <button class="tab" data-act="power-chi2" role="tab" aria-selected="false" type="button"><span class="st-up">χ²</span>（<span class="st">w</span>）</button>
+        <button class="tab" data-act="power-r" role="tab" aria-selected="false" type="button"><span class="st">r</span> 相关</button>
+      </nav>
+
+      <div class="panel panel-pad">
+        <div class="field-grid" id="powerInputFields"></div>
+        <div class="preset-row" id="presetRow">
+          <span class="preset-label">Cohen 惯例：</span>
+          <button class="btn btn-ghost btn-sm" data-act="preset-small" type="button">小效应</button>
+          <button class="btn btn-ghost btn-sm" data-act="preset-medium" type="button">中效应</button>
+          <button class="btn btn-ghost btn-sm" data-act="preset-large" type="button">大效应</button>
+        </div>
+      </div>
+
+      <div class="output" id="outputPower" hidden>
+        <div class="power-hero">
+          <div class="power-n num" id="powerN">—</div>
+          <div class="power-n-label" id="powerNLabel"></div>
+        </div>
+        <div class="result-grid" id="powerDetail"></div>
+        <div class="copyline">
+          <div class="copyline-text" id="powerReportText"></div>
+          <button class="copy-btn" data-act="copy-power-report" type="button">复制</button>
+        </div>
+        <p class="footnote">α 与功效默认 0.05 / 0.80（Cohen 惯例）。样本量为满足目标功效的最小整数。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="api-result" id="apiResult" hidden></div>
+
+  <footer class="statusbar">
+    <span class="statusbar-left">
+      <span class="status-dot ready" id="statusDot"></span>
+      <span id="statusText" aria-live="polite">就绪</span>
+    </span>
+    <span class="statusbar-right">
+      <span>纯前端 · 不上传</span>
+      <span class="sep">·</span>
+      <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
+    </span>
+  </footer>
+
+</div>
+
+<script src="lib/jstat.min.js"></script>
+<script src="stats.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
