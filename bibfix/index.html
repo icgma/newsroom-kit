@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bibfix — 参考文献修复</title>
+<meta name="description" content="粘贴从 CNKI、万方、Google Scholar 导出的 BibTeX / RIS，自动修复 DOI 前缀、页码连字符、年份、中文人名、全大写标题。不臆造缺失字段，逐条列改动。纯浏览器运行。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3Eb%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="brand">
+      <a class="back-link" href="../index.html" title="返回工具箱">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M10.5 2 5 8l5.5 6 1.4-1.4L7.8 8l4.1-4.6Z"/></svg>
+        工具箱
+      </a>
+      <span class="seal" aria-hidden="true">b</span>
+      <span class="wordmark">bibfix</span>
+      <span class="tag">参考文献修复</span>
+    </div>
+    <div class="topbar-right">
+      <span class="chip" title="所有处理在本机浏览器完成">
+        <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 1 2 4v4c0 3.6 2.6 6.8 6 7.8 3.4-1 6-4.2 6-7.8V4L8 1Zm0 2.2L13 5.4v2.6c0 2.8-2 5.3-5 6.2-3-.9-5-3.4-5-6.2V5.4L8 3.2Z"/></svg>
+        <span class="chip-label">数据不上传</span>
+      </span>
+      <button class="theme-toggle" id="themeToggle" type="button" title="切换主题">
+        <svg class="ico-auto" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm0 1.6A5.4 5.4 0 0 0 8 13.4V2.6Z" opacity=".9"/><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm1.2 1.63a5.4 5.4 0 0 1 0 10.74V2.63Z" opacity=".45"/></svg>
+        <svg class="ico-sun" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
+        <svg class="ico-moon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
+        <span id="themeLabel">自动</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main" id="mainUI">
+
+    <div class="intro">
+      <p class="eyebrow">文献与数据 · 投稿前</p>
+      <h1 class="page-title">参考文献修复</h1>
+      <p class="page-desc">粘贴从 <strong>CNKI、万方、Google Scholar、Zotero</strong> 导出的 BibTeX 或 RIS。只修可以确定的问题——DOI 前缀、页码连字符、年份、中文人名、全大写标题——<strong>绝不臆造缺失字段</strong>，每一处改动都列出来供你核对。</p>
+    </div>
+
+    <div class="control-row">
+      <div class="segmented" id="formatSegment" role="group" aria-label="输入格式">
+        <button class="seg active" data-format="auto" type="button">自动识别</button>
+        <button class="seg" data-format="bibtex" type="button">BibTeX</button>
+        <button class="seg" data-format="ris" type="button">RIS</button>
+      </div>
+      <div class="quick-actions">
+        <button class="btn btn-ghost btn-sm" data-act="sample" type="button">填入示例</button>
+        <button class="btn btn-ghost btn-sm" data-act="clear" type="button">清空</button>
+      </div>
+    </div>
+
+    <div class="two-pane">
+      <section class="pane panel" aria-label="原始条目">
+        <div class="pane-head">
+          <h2 class="panel-title">原始条目</h2>
+          <span class="pane-meta num" id="inputMeta">0 条 · 0 字</span>
+        </div>
+        <textarea id="input" class="editor" spellcheck="false" aria-label="粘贴 BibTeX 或 RIS"
+          placeholder="在这里粘贴 BibTeX 或 RIS…&#10;&#10;例：&#10;@article{duan2024,&#10;  author  = {段 某 and Lili Zhang},&#10;  title   = {A STUDY ON …},&#10;  journal = {管理世界},&#10;  year    = {2024-06},&#10;  pages   = {123-128},&#10;  doi     = {https://doi.org/10.xxx/yyy},&#10;}"></textarea>
+      </section>
+
+      <section class="pane panel" aria-label="修复结果">
+        <div class="pane-head">
+          <h2 class="panel-title">修复结果</h2>
+          <div class="pane-actions" id="outputActions" hidden>
+            <button class="btn btn-secondary btn-sm" data-act="copy-out" type="button">复制</button>
+            <button class="btn btn-secondary btn-sm" data-act="download" type="button">下载 .bib</button>
+          </div>
+        </div>
+        <textarea id="output" class="editor" readonly spellcheck="false" aria-label="修复后的 BibTeX" placeholder="修复后的 BibTeX 显示在这里"></textarea>
+        <div class="pane-status" id="outputStatus" hidden>
+          <span id="summaryLine"></span>
+        </div>
+      </section>
+    </div>
+
+    <section class="changelog panel panel-pad" id="changelog" hidden aria-label="改动清单">
+      <h2 class="panel-title">改动清单 <span class="badge badge-accent" id="changeCount"></span></h2>
+      <div class="kit-table-wrap">
+        <table class="kit-table">
+          <thead>
+            <tr><th>条目</th><th>字段</th><th>改动前</th><th>改动后</th><th>原因</th></tr>
+          </thead>
+          <tbody id="clBody"></tbody>
+        </table>
+      </div>
+      <p class="footnote">无法确定正确值的字段（缺失的 DOI、页码等）不会被补写，保持原样。请在排版软件（Zotero / Overleaf / 知网研学）中再核对一遍。</p>
+    </section>
+
+    <section class="warnings panel panel-pad" id="warningsBox" hidden aria-label="缺失字段提醒">
+      <h2 class="panel-title">缺失字段提醒 <span class="badge badge-wip" id="warnCount"></span></h2>
+      <ul class="warn-list" id="warnList"></ul>
+    </section>
+
+  </main>
+
+  <div class="api-result" id="apiResult" hidden></div>
+
+  <footer class="statusbar">
+    <span class="statusbar-left">
+      <span class="status-dot ready" id="statusDot"></span>
+      <span id="statusText" aria-live="polite">就绪</span>
+    </span>
+    <span class="statusbar-right">
+      <span>纯前端 · 不上传</span>
+      <span class="sep">·</span>
+      <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
+    </span>
+  </footer>
+
+</div>
+
+<script src="bibfix.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
