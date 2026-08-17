@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>redact — 访谈稿匿名化</title>
+<meta name="description" content="自动识别并脱敏访谈稿中的人名、机构、地名、证件号、手机号、邮箱。每一处替换均可逐项复核，导出替换映射表满足伦理审查。纯浏览器运行，数据不上传。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3Er%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="brand">
+      <a class="back-link" href="../index.html" title="返回工具箱">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M10.5 2 5 8l5.5 6 1.4-1.4L7.8 8l4.1-4.6Z"/></svg>
+        工具箱
+      </a>
+      <span class="seal" aria-hidden="true">r</span>
+      <span class="wordmark">redact</span>
+      <span class="tag">访谈稿匿名化</span>
+    </div>
+    <div class="topbar-right">
+      <span class="chip" title="所有处理在本机浏览器完成（LLM 除外，见下方说明）">
+        <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M8 1 2 4v4c0 3.6 2.6 6.8 6 7.8 3.4-1 6-4.2 6-7.8V4L8 1Zm0 2.2L13 5.4v2.6c0 2.8-2 5.3-5 6.2-3-.9-5-3.4-5-6.2V5.4L8 3.2Z"/></svg>
+        <span class="chip-label">数据不上传</span>
+      </span>
+      <button class="theme-toggle" id="themeToggle" type="button" title="切换主题">
+        <svg class="ico-auto" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm0 1.6A5.4 5.4 0 0 0 8 13.4V2.6Z" opacity=".9"/><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm1.2 1.63a5.4 5.4 0 0 1 0 10.74V2.63Z" opacity=".45"/></svg>
+        <svg class="ico-sun" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
+        <svg class="ico-moon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
+        <span id="themeLabel">自动</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main" id="mainUI">
+
+    <div class="intro">
+      <p class="eyebrow">质性研究 · 伦理审查</p>
+      <h1 class="page-title">访谈稿匿名化</h1>
+      <p class="page-desc">粘贴访谈转录或田野笔记，自动识别人名、机构、地名、证件号、手机号与邮箱。<strong>每一处替换都列出清单，可逐项勾选撤销</strong>，替换映射表可导出，满足 IRB / 伦理审查对可追溯 anonymisation 的要求。</p>
+    </div>
+
+    <div class="two-pane">
+
+      <!-- ── 左：输入 ─────────────────────────────────── -->
+      <section class="pane panel panel-pad" aria-label="输入">
+        <h2 class="panel-title">输入文本</h2>
+        <textarea id="inputText" class="source-text" rows="12"
+          placeholder="粘贴访谈转录、田野笔记或其他需要脱敏的文本……&#10;&#10;例：受访者张三表示，他在北京大学工作，手机 13812345678。"></textarea>
+
+        <div class="cat-row" id="categoryPills" role="group" aria-label="识别类别">
+          <label class="pill"><input type="checkbox" checked data-cat="person" /><span>人名</span></label>
+          <label class="pill"><input type="checkbox" checked data-cat="org" /><span>机构名</span></label>
+          <label class="pill"><input type="checkbox" checked data-cat="place" /><span>地名</span></label>
+          <label class="pill"><input type="checkbox" checked data-cat="idcard" /><span>证件号</span></label>
+          <label class="pill"><input type="checkbox" checked data-cat="phone" /><span>手机号</span></label>
+          <label class="pill"><input type="checkbox" checked data-cat="email" /><span>邮箱</span></label>
+        </div>
+
+        <details class="fold" id="customRulesSection">
+          <summary>自定义规则 <span class="fold-hint">项目编号、日期等特定模式</span></summary>
+          <div class="fold-body">
+            <div id="customRulesList" class="rules-list"></div>
+            <div class="rule-add">
+              <input type="text" id="newRulePattern" class="input" placeholder="正则表达式，如 \d{4}-\d{2}-\d{2}" />
+              <input type="text" id="newRuleLabel" class="input rule-label" placeholder="标签，如 项目编号" />
+              <button class="btn btn-secondary btn-sm" data-act="add-rule" type="button">添加</button>
+            </div>
+          </div>
+        </details>
+
+        <details class="fold" id="llmSection">
+          <summary>LLM 辅助识别 <span class="fold-hint">自备 API key，识别更准</span></summary>
+          <div class="fold-body">
+            <div class="llm-grid">
+              <div class="field">
+                <label for="llmEndpoint">API 地址</label>
+                <input type="url" id="llmEndpoint" class="input" placeholder="https://api.openai.com/v1/chat/completions" value="https://api.openai.com/v1/chat/completions" />
+              </div>
+              <div class="field">
+                <label for="llmApiKey">API Key</label>
+                <input type="password" id="llmApiKey" class="input" placeholder="sk-…（只保存在本机）" />
+              </div>
+              <div class="field">
+                <label for="llmModel">模型</label>
+                <input type="text" id="llmModel" class="input" placeholder="gpt-4o-mini / deepseek-chat …" value="gpt-4o-mini" />
+              </div>
+            </div>
+            <p class="llm-note">启用后点击「脱敏」时，文本会发送到你填写的 API 端点做命名实体识别；正则与 LLM 结果合并，LLM 优先。不发往其他任何地方。</p>
+          </div>
+        </details>
+
+        <div class="action-row">
+          <button class="btn btn-primary" data-act="redact" type="button">
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 1 2 4v4c0 3.6 2.6 6.8 6 7.8 3.4-1 6-4.2 6-7.8V4L8 1Zm0 2.2L13 5.4v2.6c0 2.8-2 5.3-5 6.2-3-.9-5-3.4-5-6.2V5.4L8 3.2ZM7 7v2h2V7H7Zm0 3v2h2v-2H7Z"/></svg>
+            脱敏
+          </button>
+          <button class="btn btn-secondary" data-act="sample" type="button">填入示例</button>
+          <button class="btn btn-ghost" data-act="clear" type="button">清空</button>
+        </div>
+      </section>
+
+      <!-- ── 右：输出与复核 ───────────────────────────── -->
+      <section class="pane panel panel-pad" aria-label="脱敏结果">
+        <div class="pane-head-row">
+          <h2 class="panel-title">脱敏结果</h2>
+          <span class="pane-meta" id="resultMeta"></span>
+        </div>
+        <div class="output-text" id="outputText">
+          <span class="placeholder">脱敏后的文本显示在这里</span>
+        </div>
+
+        <div class="output-actions" id="outputActions" hidden>
+          <button class="btn btn-secondary btn-sm" data-act="copy-redacted" type="button">复制脱敏文本</button>
+          <button class="btn btn-secondary btn-sm" data-act="export-csv" type="button">导出映射表 (CSV)</button>
+        </div>
+
+        <div class="review" id="reviewSection" hidden>
+          <h3 class="review-title">逐项复核 <span class="fold-hint">取消勾选即还原该项</span></h3>
+          <div class="kit-table-wrap">
+            <table class="kit-table review-table">
+              <thead>
+                <tr><th class="th-check"></th><th>原始文本</th><th>替换为</th><th>类型</th><th>来源</th><th>次数</th></tr>
+              </thead>
+              <tbody id="reviewBody"></tbody>
+            </table>
+          </div>
+          <p class="footnote">正则识别宁可漏判、不可错杀；漏掉的可点「编辑」手工处理。导出的 CSV 即伦理审查要求的替换映射表（re-identification key），请与脱敏稿分开保存。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="api-result" id="apiResult" hidden></div>
+
+  <footer class="statusbar">
+    <span class="statusbar-left">
+      <span class="status-dot ready" id="statusDot"></span>
+      <span id="statusText" aria-live="polite">就绪</span>
+    </span>
+    <span class="statusbar-right">
+      <span>纯前端 · 不上传（LLM 除外）</span>
+      <span class="sep">·</span>
+      <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
+    </span>
+  </footer>
+
+</div>
+
+<script src="redact.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
