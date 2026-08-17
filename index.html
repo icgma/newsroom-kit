@@ -1,73 +1,76 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="auto">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="color-scheme" content="dark light" />
-<title>便携工具箱 — icgma</title>
-<meta name="description" content="一个社科人学习 AI 过程中做的小工具集。可按类别、场景自由组合。全部在浏览器本地运行，不上传到云端。" />
+<title>newsroom-kit · 便携工具箱</title>
+<meta name="description" content="社科研究者与新闻编辑的便携工具箱。统计换算、参考文献修复、访谈脱敏、PDF 元数据——按场景组合，全部在浏览器本地运行，数据不出本机。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3E具%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="hub.css" />
 </head>
 <body>
 <div class="page">
+
   <header class="topbar">
     <div class="brand">
-      <span class="dot" aria-hidden="true"></span>
+      <span class="seal" aria-hidden="true">具</span>
       <span class="wordmark">newsroom-kit</span>
       <span class="tag">便携工具箱</span>
     </div>
     <div class="topbar-right">
-      <a class="ghlink" href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener" title="源码">
-        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-1-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.8 3.8-3.6 4 .3.3.5.8.5 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 0Z"/></svg>
+      <a class="chip" href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener" title="源码">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-1-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.8 3.8-3.6 4 .3.3.5.8.5 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 0Z"/></svg>
+        <span class="chip-label">源码</span>
       </a>
-      <button class="theme-toggle" id="themeToggle" title="切换主题">
-        <svg class="ico-moon" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
-        <svg class="ico-sun" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
-        <span id="themeLabel">浅色</span>
+      <button class="theme-toggle" id="themeToggle" type="button" title="切换主题">
+        <svg class="ico-auto" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm0 1.6A5.4 5.4 0 0 0 8 13.4V2.6Z" opacity=".9"/><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm1.2 1.63a5.4 5.4 0 0 1 0 10.74V2.63Z" opacity=".45"/></svg>
+        <svg class="ico-sun" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
+        <svg class="ico-moon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
+        <span id="themeLabel">自动</span>
       </button>
     </div>
   </header>
 
-  <main class="hero">
-    <div class="hero-inner">
-      <h1>便携工具箱</h1>
-      <p class="lede">
-        我是一个社科人，正在学习 AI、试着用 AI 把日常工作里那些重复的小麻烦，
-        做成能用的小工具。每个工具都是独立的网站，可以单独用、单独收藏；
-        在这里按类别或按工作场景组合起来。全部在你的浏览器里运行，不上传到云端。
+  <main class="main">
+    <div class="hero">
+      <p class="eyebrow">社科研究者的案头仪器</p>
+      <h1 class="hero-title">便携工具箱</h1>
+      <p class="hero-lede">
+        写论文、做访谈、核数据时反复出现的琐碎操作，收进了一个个独立的小工具。
+        全部在浏览器本地运行，<strong>数据不出本机</strong>。
       </p>
     </div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <svg class="search-ico" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M11.7 10.3a5.5 5.5 0 1 0-1.4 1.4l3.3 3.3 1.4-1.4-3.3-3.3ZM7 10.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
+        <input type="search" id="search" placeholder="搜索工具、功能或关键词…（按 / 聚焦）" aria-label="搜索工具" autocomplete="off" />
+        <button class="search-clear" id="searchClear" title="清空搜索" aria-label="清空搜索" hidden type="button">
+          <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M9.4 8l3.3-3.3-1.4-1.4L8 6.6 4.7 3.3 3.3 4.7 6.6 8l-3.3 3.3 1.4 1.4L8 9.4l3.3 3.3 1.4-1.4L9.4 8Z"/></svg>
+        </button>
+      </div>
+      <div class="segmented" id="viewToggle" role="group" aria-label="浏览方式">
+        <button class="seg active" data-view="scenario" type="button">按场景</button>
+        <button class="seg" data-view="category" type="button">按类别</button>
+        <button class="seg" data-view="all" type="button">全部</button>
+      </div>
+    </div>
+
+    <div id="content" class="content"></div>
   </main>
-
-  <div class="controls">
-    <div class="search-wrap">
-      <svg class="search-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.7 10.3a5.5 5.5 0 1 0-1.4 1.4l3.3 3.3 1.4-1.4-3.3-3.3ZM7 10.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
-      <input type="search" id="search" placeholder="搜索工具、功能或关键词…（按 / 聚焦）" aria-label="搜索工具" autocomplete="off" />
-      <button class="search-clear" id="searchClear" title="清空搜索" aria-label="清空搜索" hidden>
-        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M9.4 8l3.3-3.3-1.4-1.4L8 6.6 4.7 3.3 3.3 4.7 6.6 8l-3.3 3.3 1.4 1.4L8 9.4l3.3 3.3 1.4-1.4L9.4 8Z"/></svg>
-      </button>
-    </div>
-    <div class="segmented" id="viewToggle" role="group" aria-label="浏览方式">
-      <button class="seg active" data-view="scenario">按场景</button>
-      <button class="seg" data-view="category">按类别</button>
-      <button class="seg" data-view="all">全部</button>
-    </div>
-  </div>
-
-  <div id="content" class="content"></div>
 
   <footer class="footer">
     <div class="footer-meta">
-      <span>Built with <strong>GLM-5.2</strong></span>
-      <span class="sep desktop-only">·</span>
-      <span class="desktop-only">作者 <span class="footer-author">icgma</span></span>
+      <span id="count"></span>
+      <span class="sep">·</span>
+      <span>全部本地运行</span>
+      <span class="sep">·</span>
+      <span>作者 <span class="footer-author">icgma</span></span>
       <span class="sep">·</span>
       <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
     </div>
-    <div class="footer-meta">
-      <span id="count" class="desktop-only"></span>
-    </div>
   </footer>
+
 </div>
 <script src="registry.js"></script>
 <script src="hub.js"></script>
