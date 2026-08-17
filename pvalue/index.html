@@ -3,8 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pvalue — p 值与效应量</title>
-<meta name="description" content="输入 t / F / χ² / r 统计量，即时得到 p 值、效应量与 95% 置信区间；或反推所需样本量。纯浏览器计算，数据不上传。" />
+<title>pvalue — p 值、效应量与样本量在线计算 | newsroom-kit</title>
+<meta name="description" content="输入 t / F / χ² / r 统计量，即刻得到 p 值、效应量（Cohen's d、η²、ω²、Cramér's V）与 95% 置信区间，按 APA 格式报告；亦可反推所需样本量。与 G*Power 对基准的精确计算，纯浏览器运行。" />
+<meta name="keywords" content="p值计算,效应量,Cohen's d,样本量,功效分析,eta方,卡方检验,t检验,置信区间,APA,统计检验,在线统计" />
+<meta name="author" content="icgma" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
+<link rel="canonical" href="https://icgma.github.io/newsroom-kit/pvalue/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="newsroom-kit 便携工具箱" />
+<meta property="og:title" content="pvalue — p 值与效应量换算" />
+<meta property="og:description" content="t / F / χ² / r → p 值、效应量、置信区间；反向功效分析算样本量。APA 格式报告。" />
+<meta property="og:url" content="https://icgma.github.io/newsroom-kit/pvalue/" />
+<meta property="og:image" content="https://icgma.github.io/newsroom-kit/assets/og-pvalue.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="pvalue — p 值与效应量换算" />
+<meta name="twitter:description" content="统计量进，APA 报告出；功效分析算样本量。全部本地计算。" />
+<meta name="twitter:image" content="https://icgma.github.io/newsroom-kit/assets/og-pvalue.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "pvalue — p 值与效应量换算",
+  "url": "https://icgma.github.io/newsroom-kit/pvalue/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "zh-CN",
+  "description": "输入 t/F/χ²/r 统计量计算 p 值、效应量与置信区间，或反推所需样本量；APA 格式报告。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 便携工具箱", "url": "https://icgma.github.io/newsroom-kit/" }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23fdf9f0' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -128,8 +159,8 @@
 
 </div>
 
-<script src="lib/jstat.min.js"></script>
-<script src="stats.js"></script>
-<script src="app.js"></script>
+<script src="lib/jstat.min.js" defer></script>
+<script src="stats.js" defer></script>
+<script src="app.js" defer></script>
 </body>
 </html>

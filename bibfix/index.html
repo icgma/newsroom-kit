@@ -3,8 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>bibfix — 参考文献修复</title>
-<meta name="description" content="粘贴从 CNKI、万方、Google Scholar 导出的 BibTeX / RIS，自动修复 DOI 前缀、页码连字符、年份、中文人名、全大写标题。不臆造缺失字段，逐条列改动。纯浏览器运行。" />
+<title>bibfix — BibTeX / RIS 参考文献修复工具（CNKI·万方·Scholar） | newsroom-kit</title>
+<meta name="description" content="粘贴从 CNKI、万方、Google Scholar 导出的 BibTeX / RIS，自动修复 DOI 前缀、页码连字符、年份、中文人名、全大写标题，RIS 自动转 BibTeX 并生成规范引用键。不臆造缺失字段，逐条列改动。纯浏览器运行。" />
+<meta name="keywords" content="参考文献修复,BibTeX,RIS,DOI,CNKI,万方,Zotero,Overleaf,引用格式,文献管理" />
+<meta name="author" content="icgma" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
+<link rel="canonical" href="https://icgma.github.io/newsroom-kit/bibfix/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="newsroom-kit 便携工具箱" />
+<meta property="og:title" content="bibfix — 参考文献修复" />
+<meta property="og:description" content="BibTeX / RIS 自动修复：DOI · 页码 · 年份 · 中文人名 · 不臆造字段。" />
+<meta property="og:url" content="https://icgma.github.io/newsroom-kit/bibfix/" />
+<meta property="og:image" content="https://icgma.github.io/newsroom-kit/assets/og-bibfix.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="bibfix — 参考文献修复" />
+<meta name="twitter:description" content="中文数据库导出的引文问题一键修复，RIS 直接转 BibTeX。" />
+<meta name="twitter:image" content="https://icgma.github.io/newsroom-kit/assets/og-bibfix.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "bibfix — 参考文献修复",
+  "url": "https://icgma.github.io/newsroom-kit/bibfix/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "zh-CN",
+  "description": "自动修复 BibTeX / RIS 参考文献的常见格式问题，支持 RIS 转 BibTeX 与规范引用键生成。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 便携工具箱", "url": "https://icgma.github.io/newsroom-kit/" }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3Eb%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -116,7 +147,7 @@
 
 </div>
 
-<script src="bibfix.js"></script>
-<script src="app.js"></script>
+<script src="bibfix.js" defer></script>
+<script src="app.js" defer></script>
 </body>
 </html>

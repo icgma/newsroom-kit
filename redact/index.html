@@ -3,8 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>redact — 访谈稿匿名化</title>
-<meta name="description" content="自动识别并脱敏访谈稿中的人名、机构、地名、证件号、手机号、邮箱。每一处替换均可逐项复核，导出替换映射表满足伦理审查。纯浏览器运行，数据不上传。" />
+<title>redact — 访谈稿匿名化·脱敏工具（IRB 伦理审查） | newsroom-kit</title>
+<meta name="description" content="自动识别并脱敏访谈稿中的人名、机构、地名、身份证号、手机号、邮箱。每一处替换均可逐项复核撤销，导出替换映射表，满足 IRB / 伦理审查要求。纯浏览器运行，数据不上传。" />
+<meta name="keywords" content="访谈脱敏,匿名化,伦理审查,IRB,人名识别,个人信息保护,质性研究,替换映射表,文本脱敏" />
+<meta name="author" content="icgma" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
+<link rel="canonical" href="https://icgma.github.io/newsroom-kit/redact/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="newsroom-kit 便携工具箱" />
+<meta property="og:title" content="redact — 访谈稿匿名化" />
+<meta property="og:description" content="人名 / 机构 / 地名 / 证件号自动识别，逐项复核，导出映射表，满足伦理审查。" />
+<meta property="og:url" content="https://icgma.github.io/newsroom-kit/redact/" />
+<meta property="og:image" content="https://icgma.github.io/newsroom-kit/assets/og-redact.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="redact — 访谈稿匿名化" />
+<meta name="twitter:description" content="访谈稿一键脱敏：逐项复核 + 映射表导出，IRB 伦理审查友好。" />
+<meta name="twitter:image" content="https://icgma.github.io/newsroom-kit/assets/og-redact.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "redact — 访谈稿匿名化",
+  "url": "https://icgma.github.io/newsroom-kit/redact/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "zh-CN",
+  "description": "自动识别人名、机构、地名、证件号等个人信息并脱敏，支持逐项复核与映射表导出。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 便携工具箱", "url": "https://icgma.github.io/newsroom-kit/" }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3Er%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -151,7 +182,7 @@
 
 </div>
 
-<script src="redact.js"></script>
-<script src="app.js"></script>
+<script src="redact.js" defer></script>
+<script src="app.js" defer></script>
 </body>
 </html>
