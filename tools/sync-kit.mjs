@@ -19,6 +19,11 @@ const CSS_TARGETS = [
   "bibfix/styles.css",
   "redact/styles.css",
   "scipdf/styles.css",
+  "tidy/styles.css",
+  "imgshrink/styles.css",
+  "diffmark/styles.css",
+  "citecheck/styles.css",
+  "csvclean/styles.css",
 ];
 const JS_TARGETS = [
   "hub.js",
@@ -26,6 +31,11 @@ const JS_TARGETS = [
   "bibfix/app.js",
   "redact/app.js",
   "scipdf/app.js",
+  "tidy/app.js",
+  "imgshrink/app.js",
+  "diffmark/app.js",
+  "citecheck/app.js",
+  "csvclean/app.js",
 ];
 
 function inject(path, content, replacement) {

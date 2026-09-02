@@ -1,6 +1,6 @@
-# newsroom-kit · 便携工具箱
+# newsroom-kit · 新闻人工具箱
 
-纯粹，无广告，不跟踪。每个工具都是独立的纯前端页面（HTML + CSS + JS），零构建、零后端，全部在浏览器本地运行——**数据不出本机**。
+新闻人做的自用小工具。写稿、核材料、访谈脱敏、整理文献。每个工具都是独立的纯前端页面（HTML + CSS + JS），零构建、零后端，计算留在这台电脑上。
 
 ## 本仓库自带的工具（随仓库一起部署）
 
@@ -10,6 +10,11 @@
 | [redact](redact/) | 访谈稿匿名化：人名/机构/地名/证件号自动识别，逐项复核，导出替换映射表 | [/redact/](https://icgma.github.io/newsroom-kit/redact/) |
 | [bibfix](bibfix/) | BibTeX / RIS 参考文献修复：DOI、页码、年份、中文人名、全大写标题 | [/bibfix/](https://icgma.github.io/newsroom-kit/bibfix/) |
 | [scipdf](scipdf/) | 拖入论文 PDF → 标题、作者、DOI、卷期页、BibTeX / CSL-JSON | [/scipdf/](https://icgma.github.io/newsroom-kit/scipdf/) |
+| [tidy](tidy/) | 清稿：零宽字符、全角字母数字、多余空白、中文标点与引号 | [/tidy/](https://icgma.github.io/newsroom-kit/tidy/) |
+| [imgshrink](imgshrink/) | 本地压图：最长边、画质、JPEG/WebP，画布重绘去掉 EXIF | [/imgshrink/](https://icgma.github.io/newsroom-kit/imgshrink/) |
+| [diffmark](diffmark/) | 两段稿逐字对照：改稿、审稿、作业 | [/diffmark/](https://icgma.github.io/newsroom-kit/diffmark/) |
+| [citecheck](citecheck/) | 引文格式互转：BibTeX/RIS/APA/Chicago/MLA/GB/T 7714 任意进、四种出 | [/citecheck/](https://icgma.github.io/newsroom-kit/citecheck/) |
+| [csvclean](csvclean/) | CSV 体检与清洗：编码/分隔符检测，混合分隔符、空列、重复行、数字列混文本 | [/csvclean/](https://icgma.github.io/newsroom-kit/csvclean/) |
 
 ## 收录的外部工具（独立仓库部署）
 
@@ -27,13 +32,13 @@ index.html + hub.js + hub.css   ← 入口页（registry 数据驱动）
 registry.js                     ← 工具清单（唯一数据源）
 kit/kit.css + kit/kit.js        ← 统一设计系统「案头」的真源
 tools/sync-kit.mjs              ← 把 kit 注入各页面的 @kit 标记区
-pvalue/  redact/  bibfix/  scipdf/   ← 各工具（自包含，可独立复制）
+pvalue/  redact/  bibfix/  scipdf/  tidy/  imgshrink/  diffmark/  citecheck/  csvclean/   ← 各工具
     index.html  styles.css  app.js   ← UI
     stats.js / redact.js / …         ← 纯逻辑核心（无 DOM，可单测）
     lib/                              ← 本地化的第三方库（锁版本）
 ```
 
-- **设计系统**：纸墨双主题 + 朱砂点缀，统计符号按 APA 惯例用衬线斜体。改设计只需编辑 `kit/`，然后 `node tools/sync-kit.mjs` 一键同步五个页面。
+- **设计系统**：新闻纸双主题 + 朱砂点缀，统计符号按 APA 惯例用衬线斜体。改设计只需编辑 `kit/`，然后 `node tools/sync-kit.mjs` 一键同步五个页面。
 - **第三方库已本地化并锁版本**（jStat 1.9.6、pdf.js 3.11.174），不依赖 CDN，离线可用。
 - **LLM 接口**：每个工具支持 URL 参数 + `#json`/`#md` fragment 直接调用，见 [LLM-SKILL-SPEC.md](LLM-SKILL-SPEC.md)。
 
@@ -46,6 +51,16 @@ python -m http.server 8000   # 打开 http://localhost:8000
 改完 `kit/` 后同步：`node tools/sync-kit.mjs`
 
 生成测试 PDF（scipdf 用）：`node tools/make-test-pdf.mjs [输出路径]`
+
+清稿单元测试：`node tidy/test-tidy.mjs`
+
+对照单元测试：`node diffmark/test-diff.mjs`
+
+pvalue 单元测试：`node pvalue/test-pvalue.mjs`
+
+引文互转单元测试：`node citecheck/test-citecheck.mjs`
+
+CSV 清洗单元测试：`node csvclean/test-csvclean.mjs`
 
 ## 部署
 
@@ -89,4 +104,4 @@ github.io 在大陆访问不稳定，本仓库已做的与可选的进一步措�
 
 ## 关于
 
-作者 [icgma](https://github.com/icgma)。工具随遇到的实际问题慢慢增加，规划见 [ROADMAP.md](ROADMAP.md)。
+作者 [icgma](https://github.com/icgma)。新闻人自用，遇到什么问题就补什么工具。规划见 [ROADMAP.md](ROADMAP.md)。
