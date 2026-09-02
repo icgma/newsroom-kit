@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>diffmark — 逐字对照：改稿、审稿、作业 | newsroom-kit</title>
+<meta name="description" content="两段稿逐行、逐字对照。删的标红，增的标绿。改稿前后、审稿意见、学生作业都能用。纯浏览器，数据不出本机。" />
+<meta name="keywords" content="文本对照,逐字比对,diff,改稿,审稿,作业批改,版本对比" />
+<meta name="author" content="icgma" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
+<link rel="canonical" href="https://icgma.github.io/newsroom-kit/diffmark/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="newsroom-kit 新闻人工具箱" />
+<meta property="og:title" content="diffmark — 逐字对照" />
+<meta property="og:description" content="两段稿对照：删的标红，增的标绿。改稿、审稿、作业。" />
+<meta property="og:url" content="https://icgma.github.io/newsroom-kit/diffmark/" />
+<meta property="og:image" content="https://icgma.github.io/newsroom-kit/assets/og-diffmark.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="diffmark — 逐字对照" />
+<meta name="twitter:description" content="改稿前后贴进来，改动处标色。数据不出本机。" />
+<meta name="twitter:image" content="https://icgma.github.io/newsroom-kit/assets/og-diffmark.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "diffmark — 逐字对照",
+  "url": "https://icgma.github.io/newsroom-kit/diffmark/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "zh-CN",
+  "description": "两段文本逐行逐字对照，标出增删改。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 新闻人工具箱", "url": "https://icgma.github.io/newsroom-kit/" }
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23fdf9f0' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <a class="back-link" href="../index.html" title="返回工具箱">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M10.5 2 5 8l5.5 6 1.4-1.4L7.8 8l4.1-4.6Z"/></svg>
+        工具箱
+      </a>
+      <span class="seal" aria-hidden="true">对</span>
+      <span class="wordmark">diffmark</span>
+      <span class="tag">逐字对照</span>
+    </div>
+    <div class="topbar-right">
+      <span class="chip"><span class="chip-label">数据不上传</span></span>
+      <button class="theme-toggle" id="themeToggle" type="button" title="切换主题">
+        <svg class="ico-auto" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm0 1.6A5.4 5.4 0 0 0 8 13.4V2.6Z" opacity=".9"/><path fill="currentColor" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 1 8 1Zm1.2 1.63a5.4 5.4 0 0 1 0 10.74V2.63Z" opacity=".45"/></svg>
+        <svg class="ico-sun" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-8.5V.8m0 14.4v-1.7m3.9-9.6 1.2-1.2M2.9 13.1l1.2-1.2m0-7.8L2.9 2.9m10.2 10.2-1.2-1.2M13.5 8h1.7M.8 8h1.7"/></svg>
+        <svg class="ico-moon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M6.5 2A6 6 0 0 0 8 13.9 6 6 0 0 1 6.5 2Zm2.8-.9a7.5 7.5 0 1 0 5.6 9.3 6 6 0 0 1-5.6-9.3Z"/></svg>
+        <span id="themeLabel">自动</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main" id="mainUI">
+    <div class="intro">
+      <p class="eyebrow">文字处理 · 改稿</p>
+      <h1 class="page-title">逐字对照</h1>
+      <p class="page-desc">左边旧稿，右边新稿。删的划掉，增的加底。中文按字、英文按词。不上传。</p>
+    </div>
+
+    <div class="control-row">
+      <p class="hint-inline" id="summary">两稿贴进来即可</p>
+      <div class="quick-actions">
+        <button class="btn btn-ghost btn-sm" data-act="sample" type="button">填入示例</button>
+        <button class="btn btn-ghost btn-sm" data-act="swap" type="button">对调</button>
+        <button class="btn btn-ghost btn-sm" data-act="clear" type="button">清空</button>
+      </div>
+    </div>
+
+    <div class="two-pane">
+      <section class="pane panel">
+        <div class="pane-head"><h2 class="panel-title">旧稿</h2></div>
+        <textarea id="old" class="editor" spellcheck="false" aria-label="旧稿" placeholder="改之前的稿…"></textarea>
+      </section>
+      <section class="pane panel">
+        <div class="pane-head"><h2 class="panel-title">新稿</h2></div>
+        <textarea id="neu" class="editor" spellcheck="false" aria-label="新稿" placeholder="改之后的稿…"></textarea>
+      </section>
+    </div>
+
+    <section class="panel panel-pad result" aria-label="对照结果">
+      <h2 class="panel-title">对照</h2>
+      <div id="view" class="diff-view"></div>
+    </section>
+  </main>
+
+  <div class="api-result" id="apiResult" hidden></div>
+  <footer class="statusbar">
+    <span class="statusbar-left">
+      <span class="status-dot ready" id="statusDot"></span>
+      <span id="statusText" aria-live="polite">就绪</span>
+    </span>
+    <span class="statusbar-right">
+      <span>纯前端 · 不上传</span>
+      <span class="sep">·</span>
+      <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
+    </span>
+  </footer>
+</div>
+<script src="diff.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>

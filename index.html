@@ -3,49 +3,63 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>newsroom-kit · 便携工具箱 | 纯粹，无广告，不跟踪</title>
-<meta name="description" content="社科研究者与新闻编辑的便携工具箱。统计换算、参考文献修复、访谈脱敏、PDF 元数据——按场景组合，全部在浏览器本地运行，数据不出本机。" />
-<meta name="keywords" content="社科工具箱,在线统计,p值计算,效应量,参考文献,BibTeX,访谈脱敏,匿名化,PDF元数据,学术工具" />
+<title>newsroom-kit · 新闻人工具箱</title>
+<meta name="description" content="新闻人做的自用小工具。写稿、核材料、访谈脱敏、整理文献——打开就能用，计算留在这台电脑上。" />
+<meta name="keywords" content="新闻人工具箱,写稿工具,简繁转换,稿件字数,时区换算,访谈脱敏,参考文献,BibTeX,p值,效应量,PDF元数据" />
 <meta name="author" content="icgma" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ee" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
 <link rel="canonical" href="https://icgma.github.io/newsroom-kit/" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="newsroom-kit 便携工具箱" />
-<meta property="og:title" content="newsroom-kit · 便携工具箱" />
-<meta property="og:description" content="纯粹，无广告，不跟踪。统计换算、参考文献修复、访谈脱敏、PDF 元数据，全部本地运行，数据不出本机。" />
+<meta property="og:site_name" content="newsroom-kit 新闻人工具箱" />
+<meta property="og:title" content="newsroom-kit · 新闻人工具箱" />
+<meta property="og:description" content="新闻人做的自用小工具。写稿、核材料、访谈脱敏、整理文献。打开就能用，计算留在这台电脑上。" />
 <meta property="og:url" content="https://icgma.github.io/newsroom-kit/" />
 <meta property="og:image" content="https://icgma.github.io/newsroom-kit/assets/og-cover.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="newsroom-kit · 便携工具箱" />
-<meta name="twitter:description" content="纯粹，无广告，不跟踪。统计换算、参考文献修复、访谈脱敏、PDF 元数据，全部本地运行。" />
+<meta name="twitter:title" content="newsroom-kit · 新闻人工具箱" />
+<meta name="twitter:description" content="写稿、核材料、访谈脱敏、整理文献。打开就能用。" />
 <meta name="twitter:image" content="https://icgma.github.io/newsroom-kit/assets/og-cover.png" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "newsroom-kit 便携工具箱",
+  "name": "newsroom-kit 新闻人工具箱",
   "alternateName": "newsroom-kit",
   "url": "https://icgma.github.io/newsroom-kit/",
   "inLanguage": "zh-CN",
-  "description": "社科研究者的便携工具箱：统计换算、参考文献修复、访谈脱敏、PDF 元数据提取，全部在浏览器本地运行。",
+  "description": "新闻人做的自用小工具：写稿、核材料、访谈脱敏、整理文献，全部在浏览器本地运行。",
   "publisher": { "@type": "Organization", "name": "icgma", "url": "https://github.com/icgma" }
 }
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='bold' fill='%23fdf9f0' text-anchor='middle'%3E具%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23b23a29'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23fdf9f0' text-anchor='middle'%3Enk%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="hub.css" />
 </head>
 <body>
 <div class="page">
 
-  <header class="topbar">
-    <div class="brand">
-      <span class="seal" aria-hidden="true">具</span>
-      <span class="wordmark">newsroom-kit</span>
-      <span class="tag">便携工具箱</span>
+  <header class="masthead">
+    <p class="kicker">新闻人做的自用小工具</p>
+    <h1 class="masthead-title">newsroom-kit</h1>
+    <p class="deck">写稿、核材料、访谈脱敏、整理文献。打开就能用，计算留在这台电脑上。</p>
+  </header>
+
+  <div class="cmdbar" id="cmdbar">
+    <a class="cmd-brand" href="#top">newsroom-kit</a>
+    <div class="search-wrap">
+      <svg class="search-ico" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M11.7 10.3a5.5 5.5 0 1 0-1.4 1.4l3.3 3.3 1.4-1.4-3.3-3.3ZM7 10.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
+      <input type="search" id="search" placeholder="p 值、脱敏、BibTeX、简繁…" aria-label="搜索工具" autocomplete="off" />
+      <button class="search-clear" id="searchClear" title="清空搜索" aria-label="清空搜索" hidden type="button">
+        <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M9.4 8l3.3-3.3-1.4-1.4L8 6.6 4.7 3.3 3.3 4.7 6.6 8l-3.3 3.3 1.4 1.4L8 9.4l3.3 3.3 1.4-1.4L9.4 8Z"/></svg>
+      </button>
     </div>
-    <div class="topbar-right">
+    <div class="segmented" id="viewToggle" role="group" aria-label="浏览方式">
+      <button class="seg active" data-view="all" type="button">工作台</button>
+      <button class="seg" data-view="scenario" type="button">按工序</button>
+      <button class="seg" data-view="category" type="button">按类别</button>
+    </div>
+    <div class="cmd-right">
       <a class="chip" href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener" title="源码">
         <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-1-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3.1-1.8 3.8-3.6 4 .3.3.5.8.5 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 0Z"/></svg>
         <span class="chip-label">源码</span>
@@ -57,29 +71,18 @@
         <span id="themeLabel">自动</span>
       </button>
     </div>
-  </header>
+  </div>
 
-  <main class="main">
-    <div class="hero">
-      <h1 class="hero-title">便携工具箱</h1>
-      <p class="hero-lede">纯粹，无广告，不跟踪。</p>
-    </div>
-
-    <div class="controls">
-      <div class="search-wrap">
-        <svg class="search-ico" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M11.7 10.3a5.5 5.5 0 1 0-1.4 1.4l3.3 3.3 1.4-1.4-3.3-3.3ZM7 10.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>
-        <input type="search" id="search" placeholder="搜索工具、功能或关键词…（按 / 聚焦）" aria-label="搜索工具" autocomplete="off" />
-        <button class="search-clear" id="searchClear" title="清空搜索" aria-label="清空搜索" hidden type="button">
-          <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M9.4 8l3.3-3.3-1.4-1.4L8 6.6 4.7 3.3 3.3 4.7 6.6 8l-3.3 3.3 1.4 1.4L8 9.4l3.3 3.3 1.4-1.4L9.4 8Z"/></svg>
-        </button>
-      </div>
-      <div class="segmented" id="viewToggle" role="group" aria-label="浏览方式">
-        <button class="seg active" data-view="scenario" type="button">按场景</button>
-        <button class="seg" data-view="category" type="button">按类别</button>
-        <button class="seg" data-view="all" type="button">全部</button>
+  <main class="main" id="top">
+    <p class="hint" id="hint"><kbd>/</kbd> 搜索　工作台下 <kbd>1</kbd>–<kbd>9</kbd> 打开　也可直接粘贴或拖入</p>
+    <div id="pasteBar" class="paste-bar" hidden>
+      <p id="pasteMsg"></p>
+      <div class="paste-actions">
+        <button class="btn btn-primary btn-sm" id="pasteGo" type="button">打开</button>
+        <button class="btn btn-ghost btn-sm" id="pasteDismiss" type="button">不用</button>
       </div>
     </div>
-
+    <div id="recent" class="recent" hidden></div>
     <div id="content" class="content"></div>
   </main>
 
@@ -87,11 +90,13 @@
     <div class="footer-meta">
       <span id="count"></span>
       <span class="sep">·</span>
-      <span>全部本地运行</span>
+      <span>数据不出本机</span>
       <span class="sep">·</span>
       <span>作者 <span class="footer-author">icgma</span></span>
       <span class="sep">·</span>
       <a href="https://github.com/icgma/newsroom-kit" target="_blank" rel="noopener">源码</a>
+      <span class="sep">·</span>
+      <button type="button" class="wipe" id="wipeLocal">清空本机记录</button>
     </div>
   </footer>
 

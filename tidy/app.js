@@ -1,3 +1,8 @@
+// app.js — tidy UI
+(() => {
+  "use strict";
+
+// @kit:start
 // ════════════════════════════════════════════════════════════════
 // newsroom-kit · kit.js — 各工具共享的 UI 基座（嵌入 app.js 内）
 // 真源文件；用 `node tools/sync-kit.mjs` 同步。
@@ -115,3 +120,89 @@ function takeHandoff(toolId) {
 function setHandoff(data) {
   try { sessionStorage.setItem(HANDOFF_KEY, JSON.stringify(data)); } catch { /* 隐私模式 / 配额 */ }
 }
+// @kit:end
+
+  const els = {
+    input: $("#input"),
+    output: $("#output"),
+    inputMeta: $("#inputMeta"),
+    summary: $("#summary"),
+    quoteStyle: $("#quoteStyle"),
+    mainUI: $("#mainUI"),
+    apiResult: $("#apiResult"),
+  };
+
+  const SAMPLE = "他说\"今天  开会\"...\n\n\nＡＩ\u200B生成的\u00A0稿件，真的吗?\n行尾有空格   \n";
+
+  function opts() {
+    const o = { quotes: els.quoteStyle.value };
+    for (const box of $$("[data-opt]")) o[box.dataset.opt] = box.checked;
+    return o;
+  }
+
+  function run() {
+    const raw = els.input.value;
+    els.inputMeta.textContent = raw.length + " 字";
+    if (!raw) {
+      els.output.value = "";
+      els.summary.textContent = "粘贴后自动清理";
+      setStatus("ready", "就绪");
+      return;
+    }
+    try {
+      const res = Tidy.tidy(raw, opts());
+      els.output.value = res.text;
+      els.summary.textContent = res.changed
+        ? Tidy.summarize(res.counts)
+        : "没有需要改的";
+      setStatus(res.changed ? "ok" : "ready", res.changed ? "已清理" : "原稿已干净");
+    } catch (e) {
+      setStatus("error", "处理出错：" + e.message);
+    }
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    const act = btn.dataset.act;
+    if (act === "sample") {
+      els.input.value = SAMPLE;
+      run();
+    } else if (act === "clear") {
+      els.input.value = "";
+      run();
+      els.input.focus();
+    } else if (act === "copy-out") {
+      copyText(els.output.value, btn).then((ok) =>
+        setStatus(ok ? "ok" : "error", ok ? "已复制" : "复制失败，请手动选择"));
+    }
+  });
+
+  els.input.addEventListener("input", debounce(run, 80));
+  els.quoteStyle.addEventListener("change", run);
+  for (const box of $$("[data-opt]")) box.addEventListener("change", run);
+
+  function initAPI() {
+    const params = new URLSearchParams(location.search);
+    const input = params.get("input");
+    const hop = takeHandoff("tidy");
+    if (hop && hop.text) els.input.value = hop.text;
+    else if (input) els.input.value = input;
+    if (els.input.value) run();
+
+    const hash = location.hash.replace("#", "");
+    if (hash === "json" || hash === "md") {
+      const res = Tidy.tidy(els.input.value, opts());
+      const payload = { tool: "tidy", result: res };
+      window.__result__ = payload;
+      els.mainUI.hidden = true;
+      els.apiResult.hidden = false;
+      els.apiResult.textContent = hash === "md"
+        ? `## 清稿\n\n${Tidy.summarize(res.counts)}\n\n\`\`\`\n${res.text}\n\`\`\``
+        : JSON.stringify(payload, null, 2);
+    }
+  }
+
+  setStatus("ready", "就绪 · 粘贴后自动清理");
+  initAPI();
+})();

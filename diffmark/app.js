@@ -1,3 +1,7 @@
+(() => {
+  "use strict";
+
+// @kit:start
 // ════════════════════════════════════════════════════════════════
 // newsroom-kit · kit.js — 各工具共享的 UI 基座（嵌入 app.js 内）
 // 真源文件；用 `node tools/sync-kit.mjs` 同步。
@@ -115,3 +119,97 @@ function takeHandoff(toolId) {
 function setHandoff(data) {
   try { sessionStorage.setItem(HANDOFF_KEY, JSON.stringify(data)); } catch { /* 隐私模式 / 配额 */ }
 }
+// @kit:end
+
+  const els = {
+    old: $("#old"),
+    neu: $("#neu"),
+    view: $("#view"),
+    summary: $("#summary"),
+    mainUI: $("#mainUI"),
+    apiResult: $("#apiResult"),
+  };
+
+  const SAMPLE_OLD = "市委今天召开常委会。\n会议强调，要加快推进数字经济。";
+  const SAMPLE_NEW = "市委今晚召开常委会。\n会议强调，要稳步推进数字经济。\n会后将印发纪要。";
+
+  function render() {
+    const a = els.old.value;
+    const b = els.neu.value;
+    if (!a && !b) {
+      els.view.innerHTML = '<p class="empty-diff">两稿贴进来即可</p>';
+      els.summary.textContent = "两稿贴进来即可";
+      setStatus("ready", "就绪");
+      return;
+    }
+    const res = DiffMark.diffTexts(a, b);
+    els.summary.textContent = DiffMark.summarize(res.stats);
+    els.view.innerHTML = res.rows.map((row) => {
+      if (row.type === "eq") {
+        return `<div class="diff-line eq">${esc(row.text) || " "}</div>`;
+      }
+      if (row.type === "del") {
+        return `<div class="diff-line del">${esc(row.text) || " "}</div>`;
+      }
+      if (row.type === "ins") {
+        return `<div class="diff-line ins">${esc(row.text) || " "}</div>`;
+      }
+      const inner = row.tokens.map((t) => {
+        const v = esc(t.value) || " ";
+        if (t.type === "del") return `<del>${v}</del>`;
+        if (t.type === "ins") return `<ins>${v}</ins>`;
+        return v;
+      }).join("");
+      return `<div class="diff-line mod">${inner}</div>`;
+    }).join("");
+    setStatus(res.stats.changedLines ? "ok" : "ready", DiffMark.summarize(res.stats));
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    const act = btn.dataset.act;
+    if (act === "sample") {
+      els.old.value = SAMPLE_OLD;
+      els.neu.value = SAMPLE_NEW;
+      render();
+    } else if (act === "swap") {
+      const t = els.old.value;
+      els.old.value = els.neu.value;
+      els.neu.value = t;
+      render();
+    } else if (act === "clear") {
+      els.old.value = "";
+      els.neu.value = "";
+      render();
+      els.old.focus();
+    }
+  });
+
+  els.old.addEventListener("input", debounce(render, 80));
+  els.neu.addEventListener("input", debounce(render, 80));
+
+  const hop = takeHandoff("diffmark");
+  if (hop) {
+    if (hop.old) els.old.value = hop.old;
+    if (hop.text && !hop.new && !hop.old) els.old.value = hop.text;
+    if (hop.new) els.neu.value = hop.new;
+  }
+  const params = new URLSearchParams(location.search);
+  if (params.get("old")) els.old.value = params.get("old");
+  if (params.get("new")) els.neu.value = params.get("new");
+
+  render();
+
+  const hash = location.hash.replace("#", "");
+  if (hash === "json" || hash === "md") {
+    const res = DiffMark.diffTexts(els.old.value, els.neu.value);
+    const payload = { tool: "diffmark", stats: res.stats };
+    window.__result__ = payload;
+    els.mainUI.hidden = true;
+    els.apiResult.hidden = false;
+    els.apiResult.textContent = hash === "md"
+      ? `## 对照\n\n${DiffMark.summarize(res.stats)}`
+      : JSON.stringify(payload, null, 2);
+  }
+})();

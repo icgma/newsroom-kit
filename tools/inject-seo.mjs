@@ -38,6 +38,36 @@ const TOOLS = {
     appName: "bibfix — 参考文献修复",
     appDesc: "自动修复 BibTeX / RIS 参考文献的常见格式问题，支持 RIS 转 BibTeX 与规范引用键生成。",
   },
+  tidy: {
+    title: "tidy — 清稿：去零宽字符、全角字母、多余空白 | newsroom-kit",
+    desc: "粘贴从 Word、微信、网页拷出来的稿。去掉零宽字符、全角字母数字、行尾空白和多余空行，把中文后的半角标点改成全角，引号统一成直角引号。全部在浏览器本地完成。",
+    keywords: "清稿,去空格,零宽字符,全角半角,中文标点,引号,微信粘贴,Word粘贴,新闻改稿",
+    ogTitle: "tidy — 清稿",
+    ogDesc: "Word / 微信粘出来的垃圾清掉。零宽字符、全角字母、多余空白、中文标点。",
+    twDesc: "粘进来，干净稿复制出去。数据不出本机。",
+    appName: "tidy — 清稿",
+    appDesc: "清理 Word、微信粘贴稿中的零宽字符、全角字母数字、多余空白，并统一中文标点与引号。",
+  },
+  diffmark: {
+    title: "diffmark — 逐字对照：改稿、审稿、作业 | newsroom-kit",
+    desc: "两段稿逐行、逐字对照。删的标红，增的标绿。改稿前后、审稿意见、学生作业都能用。纯浏览器，数据不出本机。",
+    keywords: "文本对照,逐字比对,diff,改稿,审稿,作业批改,版本对比",
+    ogTitle: "diffmark — 逐字对照",
+    ogDesc: "两段稿对照：删的标红，增的标绿。改稿、审稿、作业。",
+    twDesc: "改稿前后贴进来，改动处标色。数据不出本机。",
+    appName: "diffmark — 逐字对照",
+    appDesc: "两段文本逐行逐字对照，标出增删改。",
+  },
+  imgshrink: {
+    title: "imgshrink — 本地压图：供图、课件、邮件附件 | newsroom-kit",
+    desc: "把相机原图、截图压到能当邮件附件或课件插图。选最长边和画质，导出 JPEG 或 WebP。画布重绘，EXIF 一并去掉。图片不上传。",
+    keywords: "图片压缩,本地压图,邮件附件,WebP,JPEG,去EXIF,供图,课件插图",
+    ogTitle: "imgshrink — 本地压图",
+    ogDesc: "原图拖进来，压到能发邮件。EXIF 去掉，图片不上传。",
+    twDesc: "供图、课件、附件。压完本机下载。",
+    appName: "imgshrink — 本地压图",
+    appDesc: "在浏览器本地压缩图片，控制最长边与画质，导出 JPEG / WebP 并去除 EXIF。",
+  },
   scipdf: {
     title: "scipdf — 论文 PDF 元数据提取→BibTeX | newsroom-kit",
     desc: "拖入论文 PDF，在浏览器中本地提取标题、作者、DOI、摘要与卷期页，生成 BibTeX / CSL-JSON。启发式提取，字段可核对可修改，PDF 不上传。",
@@ -64,7 +94,7 @@ for (const [slug, t] of Object.entries(TOOLS)) {
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171410" />
 <link rel="canonical" href="${url}" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="newsroom-kit 便携工具箱" />
+<meta property="og:site_name" content="newsroom-kit 新闻人工具箱" />
 <meta property="og:title" content="${t.ogTitle}" />
 <meta property="og:description" content="${t.ogDesc}" />
 <meta property="og:url" content="${url}" />
@@ -86,7 +116,7 @@ for (const [slug, t] of Object.entries(TOOLS)) {
   "inLanguage": "zh-CN",
   "description": "${t.appDesc}",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
-  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 便携工具箱", "url": "${BASE}/" }
+  "isPartOf": { "@type": "WebSite", "name": "newsroom-kit 新闻人工具箱", "url": "${BASE}/" }
 }
 </script>`;
 

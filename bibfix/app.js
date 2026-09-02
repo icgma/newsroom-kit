@@ -102,6 +102,24 @@ function downloadFile(filename, content, mime = "text/plain;charset=utf-8") {
 }
 
 initTheme();
+
+// ── 工作台交接：入口粘贴/拖入后跳到对应工具 ───────────────
+const HANDOFF_KEY = "kit-handoff";
+function takeHandoff(toolId) {
+  try {
+    const raw = sessionStorage.getItem(HANDOFF_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.tool !== toolId) return null;
+    sessionStorage.removeItem(HANDOFF_KEY);
+    return data;
+  } catch {
+    return null;
+  }
+}
+function setHandoff(data) {
+  try { sessionStorage.setItem(HANDOFF_KEY, JSON.stringify(data)); } catch { /* 隐私模式 / 配额 */ }
+}
 // @kit:end
 
   const els = {
@@ -320,4 +338,9 @@ initTheme();
   // ── 初始化 ───────────────────────────────────────────────
   setStatus("ready", "就绪 · 粘贴后自动修复");
   initAPI();
+  const hop = takeHandoff("bibfix");
+  if (hop && hop.text && !els.input.value) {
+    els.input.value = hop.text;
+    run();
+  }
 })();

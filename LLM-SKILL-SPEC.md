@@ -107,6 +107,45 @@ GET ?input=<URL编码 BibTeX或RIS>&format=bibtex|ris|auto#json
 不支持 URL 参数（需文件上传），但支持 `#json` / `#md` fragment：
 拖入 PDF 后自动输出结构化结果。
 
+### citecheck — 引文格式互转
+
+```
+GET citecheck/?input=<URL编码引文>[&to=apa|chicago|mla|gbt]#json
+```
+
+输入支持 BibTeX、RIS 或多条文本引文（每行一条），返回 `{ format, entries, outputs[] }`，
+每条含四种格式文本；解析失败该条为 `{ error }`，不要猜测。
+
+### csvclean — CSV 清洗体检
+
+```
+GET csvclean/?input=<URL编码CSV>#json
+```
+
+返回 `{ delimiter, actions[], report: { rows, columns, columnTypes[], issues[] }, output }`。
+`issues[].type`：ragged / dup-col / empty-col / mixed-col / unclosed-quote / encoding /
+invisible / fullwidth / whitespace。大文件请在页面拖入（文件不出本机）。
+
+### tidy — 清稿（零宽字符、全角、空白）
+
+```
+GET tidy/?input=<URL编码文本>#json
+```
+
+返回 `{ tool: "tidy", result }`：清理后文本与逐项改动清单。
+
+### diffmark — 逐字对照
+
+```
+GET diffmark/?old=<URL编码旧稿>&new=<URL编码新稿>#json
+```
+
+返回 `{ tool: "diffmark", stats }`：增删改行数统计与对照摘要。
+
+### imgshrink — 本地压图
+
+需文件拖入，无 URL 参数；文件不出本机。
+
 ---
 
 ## 输出约定

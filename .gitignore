@@ -4,3 +4,6 @@ node_modules/
 .vscode/
 .idea/
 .playwright-mcp/
+
+# 与工具箱无关的本机项目
+/ai-agent-ppt/

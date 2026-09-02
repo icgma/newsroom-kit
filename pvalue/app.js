@@ -102,6 +102,24 @@ function downloadFile(filename, content, mime = "text/plain;charset=utf-8") {
 }
 
 initTheme();
+
+// ── 工作台交接：入口粘贴/拖入后跳到对应工具 ───────────────
+const HANDOFF_KEY = "kit-handoff";
+function takeHandoff(toolId) {
+  try {
+    const raw = sessionStorage.getItem(HANDOFF_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.tool !== toolId) return null;
+    sessionStorage.removeItem(HANDOFF_KEY);
+    return data;
+  } catch {
+    return null;
+  }
+}
+function setHandoff(data) {
+  try { sessionStorage.setItem(HANDOFF_KEY, JSON.stringify(data)); } catch { /* 隐私模式 / 配额 */ }
+}
 // @kit:end
 
   // ── 元素 ─────────────────────────────────────────────────
@@ -557,5 +575,15 @@ initTheme();
   renderPvalueFields();
   renderPowerFields();
   setStatus("ready", "就绪 · 输入完成后自动计算");
+  const hop = takeHandoff("pvalue");
+  if (hop && hop.text) {
+    const m = String(hop.text).match(/t\s*\(\s*(\d+)\s*\)\s*=\s*(-?[\d.]+)/i);
+    if (m && !new URLSearchParams(location.search).has("t")) {
+      const url = new URL(location.href);
+      url.searchParams.set("t", m[2]);
+      url.searchParams.set("df", m[1]);
+      history.replaceState(null, "", url);
+    }
+  }
   handleURLParams();
 })();
