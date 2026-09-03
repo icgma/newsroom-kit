@@ -62,7 +62,7 @@
   <div class="inner">
     <div class="seal" id="seal">nk</div>
     <div class="text">
-      <h1 id="title">新闻人工具箱</h1>
+      <h1 id="title">便携工具箱</h1>
       <div class="rule" aria-hidden="true"></div>
       <p class="desc" id="desc">写稿 · 核材料 · 访谈脱敏 · 整理文献<br>打开就能用，计算留在这台电脑上</p>
     </div>
@@ -71,7 +71,7 @@
   <script>
     const q = new URLSearchParams(location.search);
     document.getElementById("seal").textContent = q.get("seal") || "nk";
-    document.getElementById("title").textContent = q.get("title") || "新闻人工具箱";
+    document.getElementById("title").textContent = q.get("title") || "便携工具箱";
     if (q.get("desc")) document.getElementById("desc").innerHTML = q.get("desc");
   </script>
 </body>
