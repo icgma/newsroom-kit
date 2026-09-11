@@ -309,7 +309,7 @@ function setHandoff(data) {
   }
 
   function badge(interpretation) {
-    return interpretation ? `<span class="badge badge-accent">${interpretation}效应</span>` : "";
+    return interpretation ? `<span class="badge badge-accent">${esc(interpretation)}效应</span>` : "";
   }
 
   function renderPvalueResult(r) {
